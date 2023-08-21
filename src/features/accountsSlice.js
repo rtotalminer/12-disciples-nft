@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = {
+  accounts: []
+};
 
 const accountsSlice = createSlice({
   name: "accounts",
   initialState,
   reducers: {
-    setAccounts(state, { payload }) {
-      console.log(payload);
-      state.value = payload.accounts;
+    setAccounts(state, action) {
+      state.accounts = action.payload;
     }
   }
 });

@@ -2,30 +2,39 @@ import { React, useState } from 'react';
 
 import { ethers } from "ethers";
 
-import { Button, Box, Flex, Image, Spacer } from "@chakra-ui/react";
+import { Button, Box, Flex, Image, Spacer, Grid } from "@chakra-ui/react";
 
-import { handleNetworkConnection } from "../helpers/Helpers"
+import { handleNetworkConnection } from "../helpers/Helpers";
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import EmailIcon from "../assets/social-media-icons/email_32x32.png";
 import TwitterIcon from "../assets/social-media-icons/twitter_32x32.png";
 
 import { Link } from "react-router-dom";
+import { setAccounts } from '../features/accountsSlice';
 
 export default function NavBar() {
 
+    const _accounts = useSelector(state => state.accounts);
+    const dispatch = useDispatch();
+
     const [isConnected, setIsConnected] = useState(false);
-    const [accounts, setAccounts] = useState(null);
+    const [accounts, setAccount] = useState(null);
 
     async function connectAccount() {
         if (window.ethereum) {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const res = await handleNetworkConnection(provider);
+            let res = await handleNetworkConnection(provider);
             if (res) {
-                const accounts = await window.ethereum.request({
+                window.ethereum.request({
                     method: "eth_requestAccounts",
-                });
-                setAccounts(accounts);
-                setIsConnected(true);
+                })
+                .then( (userAccounts) => {
+                    dispatch(setAccounts(userAccounts))
+                    setAccount(userAccounts);
+                    setIsConnected(true);
+                });                
             }
         }
     }

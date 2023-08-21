@@ -7,6 +7,8 @@ import {
     getMintingCost,
 } from "../helpers/Helpers";
 
+import { useSelector } from 'react-redux';
+
 import NFT from "../configs/NFT.json";
 //import config from "../config.json"
 
@@ -14,7 +16,7 @@ const NFTAddress = "0x94b8d59b9d1d5C82fD7893d159BB89E92a0bD736";
 
 export default function Mint() { 
 
-    const isConnected = Boolean(false);
+    const _accounts = useSelector(state => state.accounts);
 
     var [successMinting, setSuccessMinting] = useState(false);
     var [spinner, setSpinner] = useState(false);
@@ -25,15 +27,17 @@ export default function Mint() {
 
     useEffect(() => {
         const fetchData = async () => {
+          let isConnected = _accounts.accounts[0] != null ? true : false;
           const mintAmountData = await getWalletMintable(isConnected);
           const mintCostData = await getMintingCost(isConnected);
           setWalletMintable(mintAmountData);
           setMinitingCost(mintCostData);
         }
         fetchData().catch(console.error);
-      }, [isConnected])
+      })
 
     async function handleMint() {
+        let isConnected = _accounts.accounts[0] != null ? true : false;
         if (window.ethereum && isConnected) {
             setSpinner(true);
             setSuccessMinting(false);
@@ -99,7 +103,7 @@ export default function Mint() {
                         Jesus's disciples have returned as NFTs so they can not only shill Christianity, but cryptocurrency. There are only 12 Jesus's to be minted, will you be the lucky one?
                     </Text>
                 </div>
-                {isConnected ? (
+                {_accounts.accounts[0] != null ? (
                     <div>
                         <Flex align="center" justify="center">
                             <Button
@@ -157,7 +161,8 @@ export default function Mint() {
                         </Button>
                     </div>
                 ) : (
-                    <Text
+                    <div>
+                        <Text
                         marginTop="70px"
                         color="#D6517D"
                         fontSize="24px"
@@ -166,6 +171,9 @@ export default function Mint() {
                     >
                         You aren't connected!
                     </Text>
+                    </div>
+                    
+                    
                 )}
 
 
