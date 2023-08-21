@@ -1,27 +1,17 @@
-# WIP ❗
-
-All the code in these repos was explained by Edroh in the video below:
-
-[📺 Edroh](https://www.youtube.com/watch?v=ynFNLBP2TPs)
-
 # NFT minting dapp 🔥
 
-This repo is my own edited version of the app Edroh made, if you just want my exact copy of his repo then check out the branch:
+Mint NFTs.
 
-[🔗 Repo](https://github.com/maprob/nft-mint-site/tree/yt-copy)
-
-
-## Installation 🛠️
-
-If you are cloning the project then run:
-
-```sh
-git clone https://github.com/The-Stripes-NFT/nft-minting-app.git
+# Installation 🛠️
+To compile and launch the NFT contract:
+```bash
+npx hardhat compile
+npx hardhat run --network {network}  scripts/deploy.js
+npx hardhat verify --network {network} {address} {constructor parameters}
 ```
 
-Make sure you have node.js installed so you can use npm, then run:
-
-```sh
+To run install the web application:
+```bash
 npm -i
 npm start
 ```

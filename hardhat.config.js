@@ -6,8 +6,8 @@ require("@nomiclabs/hardhat-etherscan");
 module.exports = {
   solidity: "0.8.16",
   networks: {
-    rinkeby: {
-      url: process.env.RINKEBY_RPC_URL,
+    goerli: {
+      url: process.env.GOERLI_RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
   },

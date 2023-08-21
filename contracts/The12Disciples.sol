@@ -17,7 +17,7 @@ contract The12Disciples is ERC721, Ownable, VRFV2WrapperConsumerBase {
 
   struct MintRequest {
     address minter;
-    uint256 amount;
+    uint32 amount;
   }
 
   struct RequestStatus {
@@ -34,12 +34,11 @@ contract The12Disciples is ERC721, Ownable, VRFV2WrapperConsumerBase {
 
   uint32 callbackGasLimit = 100000;
   uint16 requestConfirmations = 3;
-  uint32 numWords = 1;
 
   address public linkAddress;
 
   bool public publicMinting = false;
-  uint256 maxMint = 3;
+  uint32 maxMint = 3;
   string public baseUri;
   uint256 public maxJesusMinted;
   uint256 public jesusMints;
@@ -85,7 +84,7 @@ contract The12Disciples is ERC721, Ownable, VRFV2WrapperConsumerBase {
     requestIds.push(requestId);
     lastRequestId = requestId;
     
-    emit RequestSent(requestId, numWords);
+    emit RequestSent(requestId, _amount);
     return requestId;
   }
 
